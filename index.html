@@ -7,45 +7,54 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg1: #0a0a0a;
-      --bg2: #131313;
-      --white: #fff;
-      --muted: rgba(255,255,255,0.55);
-      --card-bg: rgba(255,255,255,0.03);
-      --border: rgba(255,255,255,0.05);
+      --accent: linear-gradient(135deg, #4f8df5, #b24ef3);
+      --bg: linear-gradient(180deg, #0f0f10 0%, #1a1a1d 100%);
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.15);
+      --text: #f5f5f7;
+      --muted: rgba(245,245,247,0.6);
     }
 
     * { box-sizing: border-box; }
     html, body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(180deg, var(--bg1), var(--bg2));
-      color: var(--white);
+      background: var(--bg);
+      color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
 
     header {
       text-align: center;
-      padding: 60px 20px 40px;
+      padding: 80px 20px 50px;
     }
 
     header h1 {
-      font-size: 36px;
+      font-size: 40px;
       margin: 0;
       font-weight: 700;
+      background: var(--accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     header p {
       color: var(--muted);
       font-size: 16px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     nav {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(20px);
+      background: rgba(15,15,16,0.6);
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: center;
-      gap: 16px;
-      margin-top: 20px;
+      gap: 20px;
+      padding: 14px 0;
+      z-index: 10;
     }
 
     nav a {
@@ -53,14 +62,14 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
-      padding: 8px 12px;
-      border-radius: 8px;
+      padding: 8px 14px;
+      border-radius: 12px;
       transition: background 0.2s, color 0.2s;
     }
 
     nav a:hover {
-      background: var(--card-bg);
-      color: var(--white);
+      background: var(--glass-bg);
+      color: var(--text);
     }
 
     section {
@@ -79,21 +88,25 @@
 
     section h2 {
       font-size: 24px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      background: var(--accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .card {
-      background: var(--card-bg);
+      background: var(--glass-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
+      border-radius: 20px;
+      padding: 20px;
+      backdrop-filter: blur(20px);
       margin-top: 14px;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 40px rgba(79, 141, 245, 0.15);
     }
 
     .muted {
@@ -103,8 +116,9 @@
     .video-wrapper {
       position: relative;
       padding-top: 56.25%;
-      border-radius: 12px;
+      border-radius: 20px;
       overflow: hidden;
+      box-shadow: 0 0 30px rgba(178, 78, 243, 0.2);
     }
 
     .video-wrapper iframe {
@@ -117,9 +131,16 @@
 
     footer {
       text-align: center;
-      padding: 30px 20px;
+      padding: 40px 20px;
       color: var(--muted);
       font-size: 14px;
+      backdrop-filter: blur(15px);
+      background: rgba(15,15,16,0.5);
+      border-top: 1px solid var(--border);
+    }
+
+    h3 {
+      font-weight: 600;
     }
   </style>
 </head>
@@ -128,21 +149,22 @@
   <header>
     <h1>Astivils</h1>
     <p>Beginner Animator • 3 Months of Experience</p>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#videos">Video Works</a>
-      <a href="#contact">Contact</a>
-    </nav>
   </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#videos">Video Works</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
   <section id="about">
     <h2>About</h2>
     <div class="card">
       <p class="muted">
         Hey! I'm <strong>Astivils</strong>, a beginner animator with 3 months of experience.
-        I enjoy bringing characters and scenes to life through smooth, expressive motion.
-        I'm currently learning new techniques and growing my portfolio.
+        I love bringing characters and worlds to life through smooth, expressive animation.
+        Currently, I'm honing my skills and building my creative toolkit.
       </p>
     </div>
   </section>
@@ -152,12 +174,12 @@
     <div class="card">
       <strong>Developer at Liars</strong>
       <p class="muted">2025 — Present</p>
-      <p class="muted">Animator for in-game sequences and character movements.</p>
+      <p class="muted">Animating in-game sequences and refining movement polish.</p>
     </div>
     <div class="card">
       <strong>Independent Projects</strong>
       <p class="muted">2025</p>
-      <p class="muted">Practicing animation fundamentals, improving smoothness and timing.</p>
+      <p class="muted">Self-driven animation studies, focusing on timing and smoothness.</p>
     </div>
   </section>
 
@@ -166,14 +188,14 @@
     <div class="video-wrapper">
       <iframe src="https://streamable.com/e/zketyn?autoplay=0&nocontrols=0" allowfullscreen></iframe>
     </div>
-    <p class="muted" style="margin-top:8px;text-align:center;">Example animation by Astivils</p>
+    <p class="muted" style="margin-top:10px;text-align:center;">Sample animation by Astivils</p>
   </section>
 
   <section id="contact">
     <h2>Contact</h2>
-    <div class="card" style="text-align:center">
+    <div class="card" style="text-align:center;">
       <p class="muted">Reach me on Discord:</p>
-      <h3 style="margin-top:6px;font-weight:700;">astivils_</h3>
+      <h3>astivils_</h3>
     </div>
   </section>
 
@@ -182,7 +204,7 @@
   </footer>
 
   <script>
-    // Smooth scroll for nav links
+    // Smooth scroll
     document.querySelectorAll('nav a').forEach(link=>{
       link.addEventListener('click', e=>{
         const target = document.querySelector(link.getAttribute('href'));
@@ -193,7 +215,7 @@
       });
     });
 
-    // Fade-in on scroll
+    // Fade-in sections
     const observer = new IntersectionObserver(entries=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
