@@ -7,76 +7,88 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f6f5fa; /* soft grayish purple background */
-    --muted:rgba(30,30,40,0.55);
-    --accent-start:#7c6cff; /* soft purple */
-    --accent-end:#a7b3ff;   /* lilac gradient */
-    --card-bg: rgba(255,255,255,0.9);
-    --glass: rgba(255,255,255,0.75);
-    --shadow: 0 12px 40px rgba(16,24,40,0.06);
-    --radius: 16px;
+    --accent-start:#7c6cff;
+    --accent-end:#a7b3ff;
+    --muted:rgba(240,240,250,0.65);
+    --text:#e8eaf6;
   }
 
-  *{box-sizing:border-box}
-  html,body{
-    height:100%;
-    margin:0;
-    font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;
-    background:var(--bg);
-    color:#0b1020;
-    -webkit-font-smoothing:antialiased;
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;overflow-x:hidden}
+  body{
+    color:var(--text);
+    background: radial-gradient(800px 600px at 50% 20%, #7c6cff22 0%, transparent 50%), linear-gradient(180deg, #0f1122, #17192e 80%);
   }
-  a{color:inherit;text-decoration:none}
-  main{max-width:980px;margin:0 auto;padding:28px}
+
+  main{max-width:980px;margin:0 auto;padding:28px;position:relative;z-index:2}
+
+  /* Background blobs */
+  .bg-blob{
+    position:fixed;
+    width:600px;height:600px;
+    filter:blur(100px);
+    opacity:0.25;
+    pointer-events:none;
+    z-index:0;
+    background:conic-gradient(var(--accent-start), var(--accent-end), var(--accent-start));
+    top:-200px;left:-200px;
+    animation: rotateBlob 50s linear infinite;
+  }
+  @keyframes rotateBlob {
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
+  }
 
   /* Banner */
   .banner {
     position:relative;
     width:100%;
-    height:320px;
+    height:340px;
     border-radius:20px;
     overflow:hidden;
     display:flex;
     align-items:flex-end;
     justify-content:center;
-    background:linear-gradient(180deg, rgba(250,250,255,0.96), rgba(240,240,250,0.98));
     margin-top:28px;
-    border:1px solid rgba(8,10,14,0.05);
-    box-shadow: var(--shadow);
+    box-shadow:0 10px 50px rgba(0,0,0,0.25);
+    transform-origin:center;
+    transition:transform 1s ease;
   }
   .banner .gif {
-    position:absolute; inset:0; width:100%; height:120%;
+    position:absolute;inset:0;
+    width:100%;height:100%;
     object-fit:cover;
-    transform-origin:center;
     will-change:transform;
-    filter:saturate(1.05) contrast(1.05) brightness(.97);
   }
   .banner .overlay {
-    position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(250,250,255,0.0) 0%, rgba(245,245,250,0.9) 75%);
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(15,17,34,0.75) 90%);
   }
-
-  /* Headshot */
   .headshot-wrap{
-    position:relative;
+    position:absolute;
+    bottom:-80px;
     width:160px;height:160px;
     border-radius:999px;
-    border:6px solid rgba(255,255,255,0.95);
+    border:6px solid #181a2f;
     overflow:hidden;
     background:linear-gradient(135deg,var(--accent-start),var(--accent-end));
-    transform: translateY(40%);
-    box-shadow:0 30px 60px rgba(16,24,40,0.08);
+    box-shadow:0 30px 60px rgba(0,0,0,0.35);
     transition:transform .6s cubic-bezier(.2,.9,.2,1);
   }
   .headshot-wrap img{width:100%;height:100%;object-fit:cover;display:block}
-  .headshot-wrap:hover{transform:translateY(36%) scale(1.02)}
+  .headshot-wrap:hover{transform:scale(1.05)}
+
+  /* Intro under banner */
+  .intro{text-align:center;margin-top:110px}
+  .intro h1{font-size:28px;font-weight:700}
+  .intro p{color:var(--muted);margin-top:6px}
 
   /* Nav */
-  nav{display:flex;gap:12px;justify-content:center;margin:18px 0}
+  nav{display:flex;gap:12px;justify-content:center;margin:26px 0}
   nav a{
     font-weight:600;
-    color:rgba(20,20,40,0.65);
-    padding:8px 12px;
+    color:var(--muted);
+    padding:8px 14px;
     border-radius:12px;
     transition:all .18s;
   }
@@ -84,26 +96,26 @@
     background:linear-gradient(90deg,var(--accent-start),var(--accent-end));
     color:white;
     transform:translateY(-4px);
-    box-shadow:0 10px 30px rgba(124,108,255,0.15);
+    box-shadow:0 10px 30px rgba(124,108,255,0.25);
   }
 
   /* Sections */
-  section{max-width:820px;margin:48px auto;padding:0 18px;opacity:0;transform:translateY(10px) scale(0.995);transition:opacity .6s ease,transform .6s ease}
+  section{max-width:820px;margin:60px auto;padding:0 18px;opacity:0;transform:translateY(20px) scale(0.98);transition:opacity .8s ease,transform .8s ease}
   section.visible{opacity:1;transform:none}
 
   .card{
-    background:var(--card-bg);
-    border-radius:12px;
-    padding:18px;
-    border:1px solid rgba(20,20,30,0.06);
-    box-shadow:0 6px 30px rgba(16,24,40,0.05);
-    transition:transform .2s;
-    backdrop-filter: blur(8px);
+    background:rgba(255,255,255,0.03);
+    border-radius:16px;
+    padding:20px;
+    border:1px solid rgba(255,255,255,0.05);
+    box-shadow:0 8px 30px rgba(0,0,0,0.3);
+    backdrop-filter:blur(8px);
+    transition:transform .25s;
   }
   .card:hover{transform:translateY(-6px)}
 
   h2{
-    margin:0 0 10px 0;
+    margin:0 0 14px 0;
     font-size:22px;
     background:linear-gradient(90deg,var(--accent-start),var(--accent-end));
     -webkit-background-clip:text;
@@ -118,39 +130,39 @@
     margin-top:12px;
     border-radius:12px;
     overflow:hidden;
-    border:1px solid rgba(20,20,30,0.06);
-    box-shadow:0 14px 50px rgba(16,24,40,0.06);
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 14px 50px rgba(0,0,0,0.5);
   }
   .video iframe{width:100%;height:480px;border:0;display:block}
 
   .contact-card{text-align:center;padding:22px;border-radius:12px}
   .discord{font-weight:700;font-size:20px;margin-top:8px;background:linear-gradient(90deg,var(--accent-start),var(--accent-end));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-  footer{margin:60px 0 40px;color:var(--muted);text-align:center;font-size:13px}
+  footer{margin:80px 0 40px;color:var(--muted);text-align:center;font-size:13px}
 
   @media (max-width:820px){
     .banner{height:260px}
-    .headshot-wrap{width:130px;height:130px}
+    .headshot-wrap{width:130px;height:130px;bottom:-65px}
     .video iframe{height:320px}
   }
 </style>
 </head>
 <body>
-<main>
+<div class="bg-blob"></div>
 
+<main>
   <!-- Banner -->
   <div class="banner" id="banner">
     <img class="gif" id="bannerGif" src="https://cdn.discordapp.com/attachments/1349627513080516678/1429376560141701152/2025-10-1815-03-14-ezgif.com-video-to-gif-converter.gif" alt="banner gif">
-    <div class="overlay" aria-hidden="true"></div>
-    <div style="position:relative;z-index:6;padding:20px;width:100%;display:flex;align-items:center;justify-content:center;flex-direction:column">
-      <div class="headshot-wrap">
-        <img src="https://media.discordapp.net/attachments/1349627513080516678/1429376956641574942/de6972d347c0d2d7.jpeg?format=webp&width=1324&height=1324" alt="Astivils headshot">
-      </div>
-      <div style="text-align:center;margin-top:12px">
-        <div style="font-weight:700;font-size:20px">Astivils</div>
-        <div style="color:var(--muted);margin-top:6px">Beginner Animator — 3 months experience</div>
-      </div>
+    <div class="overlay"></div>
+    <div class="headshot-wrap">
+      <img src="https://media.discordapp.net/attachments/1349627513080516678/1429376956641574942/de6972d347c0d2d7.jpeg?format=webp&width=1324&height=1324" alt="Astivils headshot">
     </div>
+  </div>
+
+  <div class="intro">
+    <h1>Astivils</h1>
+    <p>Beginner Animator — 3 months experience</p>
   </div>
 
   <!-- nav -->
@@ -219,7 +231,7 @@
     });
   });
 
-  // Reveal animation
+  // Reveal sections
   const sections=document.querySelectorAll('section');
   const io=new IntersectionObserver((entries,obs)=>{
     entries.forEach(entry=>{
@@ -231,17 +243,13 @@
   },{threshold:0.15});
   sections.forEach(s=>io.observe(s));
 
-  // Banner parallax
-  const bannerGif=document.getElementById('bannerGif');
+  // Banner zoom on scroll
   const banner=document.getElementById('banner');
   window.addEventListener('scroll',()=>{
     const y=window.scrollY;
-    const scale=1+Math.min(0.08,y*0.0006);
-    bannerGif.style.transform=`translateY(${Math.min(30,y*0.02)}px) scale(${scale})`;
+    const scale=1+Math.min(0.12,y*0.0005);
+    banner.style.transform=`scale(${scale}) translateY(${y*0.05}px)`;
   });
-
-  // Fallback
-  window.addEventListener('load',()=>{sections.forEach(s=>{if(s.getBoundingClientRect().top<window.innerHeight)s.classList.add('visible');})});
 </script>
 </body>
 </html>
