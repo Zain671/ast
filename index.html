@@ -1,156 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Astivils — Animator Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --accent: linear-gradient(135deg, #4f8df5, #b24ef3);
-      --bg: linear-gradient(180deg, #0f0f10 0%, #1a1a1d 100%);
-      --glass-bg: rgba(255, 255, 255, 0.08);
-      --border: rgba(255, 255, 255, 0.15);
-      --text: #f5f5f7;
-      --muted: rgba(245,245,247,0.6);
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Astivils — Animator Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff;
+    --muted:rgba(10,10,12,0.55);
+    --accent-start:#5cc0ff;
+    --accent-end:#b074ff;
+    --card-bg: rgba(255,255,255,0.85);
+    --glass: rgba(255,255,255,0.7);
+    --shadow: 0 12px 40px rgba(16,24,40,0.08);
+    --radius: 16px;
+  }
 
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-    }
+  /* Reset */
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:var(--white);color:#0b1020;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  main{max-width:980px;margin:0 auto;padding:28px}
 
-    header {
-      text-align: center;
-      padding: 80px 20px 50px;
-    }
+  /* Banner */
+  .banner {
+    position:relative;
+    width:100%;
+    height:320px;
+    border-radius:20px;
+    overflow:hidden;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98));
+    margin-top:28px;
+    border:1px solid rgba(8,10,14,0.06);
+    box-shadow: var(--shadow);
+  }
+  .banner .gif {
+    position:absolute; inset:0; width:100%; height:120%;
+    object-fit:cover; transform-origin:center; will-change:transform; filter: saturate(1.02) contrast(1.02) brightness(.98);
+  }
+  .banner .overlay {
+    position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.85) 70%);
+  }
 
-    header h1 {
-      font-size: 40px;
-      margin: 0;
-      font-weight: 700;
-      background: var(--accent);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  /* Headshot */
+  .headshot-wrap{
+    position:relative;
+    width:160px;height:160px;border-radius:999px;border:6px solid rgba(255,255,255,0.95);
+    overflow:hidden;background:linear-gradient(135deg,var(--accent-start),var(--accent-end));
+    transform: translateY(40%); box-shadow:0 30px 60px rgba(16,24,40,0.08);
+    transition:transform .6s cubic-bezier(.2,.9,.2,1);
+  }
+  .headshot-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+  .headshot-wrap:hover{transform:translateY(36%) scale(1.02)}
 
-    header p {
-      color: var(--muted);
-      font-size: 16px;
-      margin-top: 10px;
-    }
+  /* Header row */
+  header.top {
+    display:flex;align-items:center;gap:18px;padding:12px 0;
+  }
+  .title {
+    margin-left:14px;
+  }
+  h1{margin:0;font-size:30px;letter-spacing:-0.6px}
+  .subtitle{margin:6px 0 0 0;color:var(--muted);font-size:14px}
 
-    nav {
-      position: sticky;
-      top: 0;
-      backdrop-filter: blur(20px);
-      background: rgba(15,15,16,0.6);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 14px 0;
-      z-index: 10;
-    }
+  /* Nav row (small, simple) */
+  nav{display:flex;gap:12px;justify-content:center;margin:18px 0}
+  nav a{font-weight:600;color:rgba(8,10,14,0.6);padding:8px 12px;border-radius:12px;text-decoration:none;transition:all .18s}
+  nav a:hover{background:linear-gradient(90deg,var(--accent-start),var(--accent-end));color:white;transform:translateY(-4px);box-shadow:0 10px 30px rgba(92,192,255,0.12)}
 
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 14px;
-      padding: 8px 14px;
-      border-radius: 12px;
-      transition: background 0.2s, color 0.2s;
-    }
+  /* Sections */
+  section{max-width:820px;margin:48px auto;padding:0 18px;opacity:0;transform:translateY(10px) scale(0.995);transition:opacity .6s ease,transform .6s ease}
+  section.visible{opacity:1;transform:none}
 
-    nav a:hover {
-      background: var(--glass-bg);
-      color: var(--text);
-    }
+  .card{background:var(--card-bg);border-radius:12px;padding:18px;border:1px solid rgba(10,12,20,0.06);box-shadow:0 6px 30px rgba(16,24,40,0.05);transition:transform .2s;backdrop-filter: blur(6px)}
+  .card:hover{transform:translateY(-6px)}
 
-    section {
-      max-width: 800px;
-      margin: 80px auto;
-      padding: 0 20px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
+  h2{margin:0 0 10px 0;font-size:22px;background:linear-gradient(90deg,var(--accent-start),var(--accent-end));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  p.lead{color:var(--muted);line-height:1.6;margin:0}
 
-    section.visible {
-      opacity: 1;
-      transform: none;
-    }
+  /* Experience list */
+  .experience-list{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+  .exp-item{display:flex;gap:12px;align-items:flex-start}
+  .exp-meta{font-size:13px;color:var(--muted)}
 
-    section h2 {
-      font-size: 24px;
-      margin-bottom: 16px;
-      background: var(--accent);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  /* Video embed */
+  .video {
+    margin-top:12px;border-radius:12px;overflow:hidden;border:1px solid rgba(10,12,20,0.05);
+    box-shadow:0 14px 50px rgba(16,24,40,0.06);
+  }
+  .video iframe{width:100%;height:480px;border:0;display:block}
 
-    .card {
-      background: var(--glass-bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 20px;
-      backdrop-filter: blur(20px);
-      margin-top: 14px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
+  /* Contact card */
+  .contact-card{text-align:center;padding:22px;border-radius:12px}
+  .discord{font-weight:700;font-size:20px;margin-top:8px;color: #0b1020;background:linear-gradient(90deg,var(--accent-start),var(--accent-end));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 40px rgba(79, 141, 245, 0.15);
-    }
+  /* Footer */
+  footer{margin:60px 0 40px;color:var(--muted);text-align:center;font-size:13px}
 
-    .muted {
-      color: var(--muted);
-    }
-
-    .video-wrapper {
-      position: relative;
-      padding-top: 56.25%;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 0 30px rgba(178, 78, 243, 0.2);
-    }
-
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--muted);
-      font-size: 14px;
-      backdrop-filter: blur(15px);
-      background: rgba(15,15,16,0.5);
-      border-top: 1px solid var(--border);
-    }
-
-    h3 {
-      font-weight: 600;
-    }
-  </style>
+  /* Responsive */
+  @media (max-width:820px){
+    .banner{height:260px}
+    .headshot-wrap{width:130px;height:130px}
+    .video iframe{height:320px}
+  }
+</style>
 </head>
 <body>
+<main>
 
-  <header>
-    <h1>Astivils</h1>
-    <p>Beginner Animator • 3 Months of Experience</p>
-  </header>
+  <!-- Banner area -->
+  <div class="banner" id="banner">
+    <!-- banner gif (parallax/zoomed) -->
+    <img class="gif" id="bannerGif" src="https://cdn.discordapp.com/attachments/1349627513080516678/1429376560141701152/2025-10-1815-03-14-ezgif.com-video-to-gif-converter.gif?ex=68f5ea28&is=68f498a8&hm=76a484d0f6fd5739ca5fda9befd221b61a4e4eb7c5ac8090898616bfb56b0fff" alt="banner gif">
+    <div class="overlay" aria-hidden="true"></div>
 
+    <!-- headshot & header content overlayed visually bottom-centered -->
+    <div style="position:relative;z-index:6;padding:20px;width:100%;display:flex;align-items:center;justify-content:center;flex-direction:column">
+      <div class="headshot-wrap" id="headshot">
+        <img src="https://media.discordapp.net/attachments/1349627513080516678/1429376956641574942/de6972d347c0d2d7.jpeg?ex=68f5ea87&is=68f49907&hm=c65f5010d2210d4a371c3b92961e812dc72c7a677eab2e2c5ca36b484f9adc54&=&format=webp&width=1324&height=1324" alt="Astivils headshot">
+      </div>
+      <div style="text-align:center;margin-top:12px">
+        <div style="font-weight:700;font-size:20px">Astivils</div>
+        <div style="color:var(--muted);margin-top:6px">Beginner Animator — 3 months experience</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- nav -->
   <nav>
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
@@ -158,75 +138,104 @@
     <a href="#contact">Contact</a>
   </nav>
 
-  <section id="about">
-    <h2>About</h2>
+  <!-- About -->
+  <section id="about" aria-labelledby="about-heading">
+    <h2 id="about-heading">About</h2>
     <div class="card">
-      <p class="muted">
-        Hey! I'm <strong>Astivils</strong>, a beginner animator with 3 months of experience.
-        I love bringing characters and worlds to life through smooth, expressive animation.
-        Currently, I'm honing my skills and building my creative toolkit.
-      </p>
+      <p class="lead">Hi — I'm <strong>Astivils</strong>. I create short animated sequences with focus on timing, squash & stretch, and expressive motion. I'm currently building my skills and collaborating on small in-game animations and indie projects. I enjoy iterative workflow and learning from feedback.</p>
     </div>
   </section>
 
-  <section id="experience">
-    <h2>Experience</h2>
-    <div class="card">
-      <strong>Developer at Liars</strong>
-      <p class="muted">2025 — Present</p>
-      <p class="muted">Animating in-game sequences and refining movement polish.</p>
-    </div>
-    <div class="card">
-      <strong>Independent Projects</strong>
-      <p class="muted">2025</p>
-      <p class="muted">Self-driven animation studies, focusing on timing and smoothness.</p>
-    </div>
-  </section>
+  <!-- Experience -->
+  <section id="experience" aria-labelledby="exp-heading">
+    <h2 id="exp-heading">Experience</h2>
+    <div class="experience-list">
+      <div class="card exp-item">
+        <div style="flex:1">
+          <div style="font-weight:700">Developer — Liars</div>
+          <div class="exp-meta">2025 — Present</div>
+          <div style="margin-top:8px;color:var(--muted)">Working on animation polish, cutscene timing, and in-game motion systems.</div>
+        </div>
+      </div>
 
-  <section id="videos">
-    <h2>Video Works</h2>
-    <div class="video-wrapper">
-      <iframe src="https://streamable.com/e/zketyn?autoplay=0&nocontrols=0" allowfullscreen></iframe>
-    </div>
-    <p class="muted" style="margin-top:10px;text-align:center;">Sample animation by Astivils</p>
-  </section>
-
-  <section id="contact">
-    <h2>Contact</h2>
-    <div class="card" style="text-align:center;">
-      <p class="muted">Reach me on Discord:</p>
-      <h3>astivils_</h3>
+      <div class="card exp-item">
+        <div style="flex:1">
+          <div style="font-weight:700">Independent Animation Projects</div>
+          <div class="exp-meta">2025</div>
+          <div style="margin-top:8px;color:var(--muted)">Personal practice reels, character motion studies, and short-form looping sequences.</div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <footer>
-    © 2025 Astivils — Portfolio
-  </footer>
+  <!-- Videos -->
+  <section id="videos" aria-labelledby="videos-heading">
+    <h2 id="videos-heading">Video Works</h2>
+    <div class="card video">
+      <!-- Streamable embed (responsive) -->
+      <iframe src="https://streamable.com/e/zketyn" allowfullscreen></iframe>
+    </div>
+    <div style="text-align:center;margin-top:10px;color:var(--muted)">Example animation / demo reel</div>
+  </section>
 
-  <script>
-    // Smooth scroll
-    document.querySelectorAll('nav a').forEach(link=>{
-      link.addEventListener('click', e=>{
-        const target = document.querySelector(link.getAttribute('href'));
-        if(target){
-          e.preventDefault();
-          target.scrollIntoView({behavior:'smooth'});
-        }
-      });
+  <!-- Contact -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <h2 id="contact-heading">Contact</h2>
+    <div class="card contact-card">
+      <div class="muted">Reach me on Discord</div>
+      <div class="discord">astivils_</div>
+      <div style="margin-top:10px;color:var(--muted)">Open to small collaborations & animation practice sessions.</div>
+    </div>
+  </section>
+
+  <footer>© 2025 Astivils — Animator</footer>
+</main>
+
+<!-- scripts: parallax + reveal -->
+<script>
+  // Smooth nav scrolling
+  document.querySelectorAll('nav a').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const href = a.getAttribute('href');
+      if(!href || !href.startsWith('#')) return;
+      e.preventDefault();
+      document.querySelector(href).scrollIntoView({behavior:'smooth', block:'start'});
     });
+  });
 
-    // Fade-in sections
-    const observer = new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
+  // Section reveal
+  const sections = document.querySelectorAll('section');
+  const io = new IntersectionObserver((entries, obs)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.15});
+  sections.forEach(s => io.observe(s));
 
-    document.querySelectorAll('section').forEach(sec=>observer.observe(sec));
-  </script>
+  // Banner parallax zoom effect
+  const bannerGif = document.getElementById('bannerGif');
+  const banner = document.getElementById('banner');
+  window.addEventListener('scroll', ()=>{
+    const rect = banner.getBoundingClientRect();
+    const mid = window.innerHeight / 2;
+    const diff = Math.max(-mid, Math.min(mid, rect.top - mid));
+    // compute a subtle scale between 1 and 1.08
+    const y = window.scrollY;
+    const scale = 1 + Math.max(0, (y * 0.0006));
+    bannerGif.style.transform = `translateY(${Math.min(30, y*0.02)}px) scale(${scale})`;
+    // headshot lift when near top
+    const head = document.querySelector('.headshot-wrap');
+    if(head){
+      const lift = Math.max(0, Math.min(40, 40 - rect.top * 0.08));
+      head.style.transform = `translateY(${Math.max(24, Math.min(48, 40 - rect.top * 0.06))}px)`;
+    }
+  });
 
+  // Friendly fallback: ensure sections visible on load if already scrolled
+  window.addEventListener('load', ()=>{ sections.forEach(s=>{ if(s.getBoundingClientRect().top < window.innerHeight) s.classList.add('visible'); })});
+</script>
 </body>
 </html>
